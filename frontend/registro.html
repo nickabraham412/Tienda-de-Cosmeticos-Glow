@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crear cuenta · Glow</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header id="site-header" class="site-header"></header>
+<main id="contenido" class="container narrow">
+  <h1>Crear cuenta</h1>
+  <form id="register-form" class="form" novalidate>
+    <div class="two">
+      <label>Nombre
+        <input name="nombre" maxlength="60" autocomplete="given-name">
+        <small class="err" data-err-for="nombre"></small>
+      </label>
+      <label>Apellido
+        <input name="apellido" maxlength="60" autocomplete="family-name">
+        <small class="err" data-err-for="apellido"></small>
+      </label>
+    </div>
+    <label>Correo electrónico
+      <input name="email" type="email" maxlength="120" autocomplete="email">
+      <small class="err" data-err-for="email"></small>
+    </label>
+    <label>Teléfono (opcional)
+      <input name="telefono" type="tel" maxlength="20" autocomplete="tel">
+      <small class="err" data-err-for="telefono"></small>
+    </label>
+    <label>Contraseña
+      <input name="password" type="password" maxlength="72" autocomplete="new-password">
+      <small class="hint">Mínimo 8 caracteres, con mayúscula, minúscula y número.</small>
+      <small class="err" data-err-for="password"></small>
+    </label>
+    <label>Repite la contraseña
+      <input name="password2" type="password" maxlength="72" autocomplete="new-password">
+      <small class="err" data-err-for="password2"></small>
+    </label>
+    <button class="btn btn-primary btn-block" type="submit">Crear cuenta</button>
+    <p class="muted">¿Ya tienes cuenta? <a href="/login.html">Iniciar sesión</a></p>
+  </form>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script type="module" src="/js/auth.js"></script>
+</body>
+</html>

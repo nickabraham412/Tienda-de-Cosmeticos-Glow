@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finalizar compra · Glow</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header id="site-header" class="site-header"></header>
+<main id="contenido" class="container">
+  <h1>Finalizar compra</h1>
+  <div id="checkout" class="checkout">
+    <form id="checkout-form" class="form" novalidate autocomplete="on">
+      <fieldset>
+        <legend>Datos de envío</legend>
+        <label>Dirección
+          <input name="direccion" maxlength="200" autocomplete="street-address">
+          <small class="err" data-err-for="direccion"></small>
+        </label>
+        <div class="two">
+          <label>Ciudad
+            <input name="ciudad" maxlength="80" autocomplete="address-level2">
+            <small class="err" data-err-for="ciudad"></small>
+          </label>
+          <label>Teléfono
+            <input name="telefono" type="tel" maxlength="20" autocomplete="tel">
+            <small class="err" data-err-for="telefono"></small>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Pago con tarjeta (simulado)</legend>
+        <p class="hint">No se realiza ningún cobro. Prueba con 4242 4242 4242 4242 (aprobada) o 4000 0000 0000 0002 (rechazada), cualquier fecha futura y 3 dígitos de CVV.</p>
+        <label>Titular de la tarjeta
+          <input name="titular" maxlength="80" autocomplete="cc-name">
+          <small class="err" data-err-for="titular"></small>
+        </label>
+        <label>Número de tarjeta
+          <input name="numero" inputmode="numeric" maxlength="23" autocomplete="off" placeholder="0000 0000 0000 0000">
+          <small class="err" data-err-for="numero"></small>
+        </label>
+        <div class="two">
+          <label>Vencimiento (MM/AA)
+            <input name="vencimiento" inputmode="numeric" maxlength="5" autocomplete="off" placeholder="MM/AA">
+            <small class="err" data-err-for="vencimiento"></small>
+          </label>
+          <label>CVV
+            <input name="cvv" inputmode="numeric" maxlength="4" autocomplete="off" type="password">
+            <small class="err" data-err-for="cvv"></small>
+          </label>
+        </div>
+      </fieldset>
+      <button id="pay-btn" class="btn btn-primary btn-block" type="submit">Confirmar y pagar</button>
+    </form>
+    <aside id="summary" class="summary" aria-label="Resumen del pedido"></aside>
+  </div>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script type="module" src="/js/checkout.js"></script>
+</body>
+</html>

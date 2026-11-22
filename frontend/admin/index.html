@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administración · Glow</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header id="site-header" class="site-header"></header>
+<main id="contenido" class="container admin">
+  <h1>Panel de administración</h1>
+  <section id="stats" class="stats" aria-label="Resumen"></section>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" data-tab="productos" aria-selected="true">Productos y stock</button>
+    <button class="tab" role="tab" data-tab="pedidos" aria-selected="false">Pedidos</button>
+    <button class="tab" role="tab" data-tab="clientes" aria-selected="false">Clientes</button>
+  </div>
+
+  <section id="tab-productos">
+    <div class="toolbar">
+      <input id="p-filter" type="search" placeholder="Filtrar por nombre o marca" aria-label="Filtrar productos">
+      <button id="btn-nuevo" class="btn btn-primary" type="button">Nuevo producto</button>
+    </div>
+    <div class="table-wrap"><table id="tbl-productos"></table></div>
+  </section>
+
+  <section id="tab-pedidos" hidden>
+    <div class="table-wrap"><table id="tbl-pedidos"></table></div>
+  </section>
+
+  <section id="tab-clientes" hidden>
+    <div class="table-wrap"><table id="tbl-clientes"></table></div>
+  </section>
+</main>
+
+<dialog id="dlg-producto">
+  <form id="form-producto" class="form" novalidate>
+    <h2 id="dlg-producto-titulo">Nuevo producto</h2>
+    <label>Nombre
+      <input name="nombre" maxlength="120">
+      <small class="err" data-err-for="nombre"></small>
+    </label>
+    <div class="two">
+      <label>Marca
+        <input name="marca" maxlength="60">
+        <small class="err" data-err-for="marca"></small>
+      </label>
+      <label>Categoría
+        <select name="categoriaId" id="p-cat"></select>
+        <small class="err" data-err-for="categoriaId"></small>
+      </label>
+    </div>
+    <div class="two">
+      <label>Precio (USD)
+        <input name="precio" inputmode="decimal" maxlength="9">
+        <small class="err" data-err-for="precio"></small>
+      </label>
+      <label>Stock
+        <input name="stock" inputmode="numeric" maxlength="6">
+        <small class="err" data-err-for="stock"></small>
+      </label>
+    </div>
+    <label>Tipo de piel
+      <select name="tipoPiel">
+        <option value="todo tipo">Todo tipo</option>
+        <option value="seca">Seca</option>
+        <option value="grasa">Grasa</option>
+        <option value="mixta">Mixta</option>
+        <option value="sensible">Sensible</option>
+      </select>
+      <small class="err" data-err-for="tipoPiel"></small>
+    </label>
+    <label>URL de la imagen (opcional)
+      <input name="imagenUrl" type="url" maxlength="500" placeholder="https://…">
+      <small class="err" data-err-for="imagenUrl"></small>
+    </label>
+    <label>Descripción
+      <textarea name="descripcion" rows="3" maxlength="2000"></textarea>
+      <small class="err" data-err-for="descripcion"></small>
+    </label>
+    <label class="check"><input type="checkbox" name="activo" checked> Visible en la tienda</label>
+    <div class="dlg-actions">
+      <button class="btn btn-ghost" type="button" data-close>Cancelar</button>
+      <button class="btn btn-primary" type="submit">Guardar producto</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-pedido">
+  <div id="pedido-detalle" class="form"></div>
+  <div class="dlg-actions"><button class="btn btn-ghost" type="button" data-close>Cerrar</button></div>
+</dialog>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script type="module" src="/js/admin.js"></script>
+</body>
+</html>
