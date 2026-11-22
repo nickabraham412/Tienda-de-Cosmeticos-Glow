@@ -1,41 +1,51 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cosmética facial · Glow</title>
-<link rel="stylesheet" href="/css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cosmética facial · Glow</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<a class="skip" href="#contenido">Saltar al contenido</a>
-<header id="site-header" class="site-header"></header>
-<section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <h1>Tu base, a tu tono.</h1>
-      <p class="lead">Bases, correctores, rubores y cuidado de la piel para cada tipo de rostro. Filtra por categoría y encuentra lo que tu piel necesita.</p>
+  <!-- menu superior que se carga con js -->
+  <header id="site-header" class="site-header"></header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Tu base, a tu tono.</h1>
+        <p class="lead">Bases, correctores, rubores y cuidado de la piel para cada tipo de rostro. Filtra por categoría y encuentra lo que tu piel necesita.</p>
+      </div>
+      <ul class="swatches" aria-hidden="true">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+      </ul>
     </div>
-    <ul class="swatches" aria-hidden="true">
-      <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-    </ul>
-  </div>
-</section>
-<main id="contenido" class="container">
-  <div class="filters">
-    <input id="f-q" type="search" placeholder="Buscar producto o marca" maxlength="60" aria-label="Buscar producto o marca">
-    <select id="f-cat" aria-label="Categoría"><option value="">Todas las categorías</option></select>
-    <select id="f-orden" aria-label="Ordenar por">
-      <option value="nuevos">Novedades</option>
-      <option value="precio_asc">Precio: de menor a mayor</option>
-      <option value="precio_desc">Precio: de mayor a menor</option>
-      <option value="nombre">Nombre (A–Z)</option>
-    </select>
-  </div>
-  <p id="results-info" class="muted" aria-live="polite"></p>
-  <div id="grid" class="grid"></div>
-  <div id="pager" class="pager"></div>
-</main>
-<footer id="site-footer" class="site-footer"></footer>
-<script type="module" src="/js/home.js"></script>
+  </section>
+
+  <main class="container">
+    <!-- barra de busqueda, categorias y orden -->
+    <div class="filters">
+      <input id="f-q" type="search" placeholder="Buscar producto o marca" maxlength="60">
+      <select id="f-cat">
+        <option value="">Todas las categorías</option>
+      </select>
+      <select id="f-orden">
+        <option value="nuevos">Novedades</option>
+        <option value="precio_asc">Precio: de menor a mayor</option>
+        <option value="precio_desc">Precio: de mayor a menor</option>
+        <option value="nombre">Nombre (A–Z)</option>
+      </select>
+    </div>
+
+    <p id="results-info" class="muted"></p>
+    <!-- aqui se pintan las tarjetas de los productos -->
+    <div id="grid" class="grid"></div>
+    <!-- aqui van los botones de pagina 1, 2, 3... -->
+    <div id="pager" class="pager"></div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="/js/home.js"></script>
 </body>
 </html>
