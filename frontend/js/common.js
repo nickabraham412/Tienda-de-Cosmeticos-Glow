@@ -196,8 +196,6 @@ export const rule = {
   required: (v) => (v ? null : 'Este campo es obligatorio'),
   min: (n) => (v) => (v.length >= n ? null : `Escribe al menos ${n} caracteres`),
   max: (n) => (v) => (v.length <= n ? null : `Máximo ${n} caracteres`),
-  // Permite que otras páginas (como Administración al guardar URLs) revisen patrones de texto
-  match: (patron, msg) => (v) => (!v || patron.test(v) ? null : msg),
   same: (campoOtro, msg) => (v, datos) => (v === datos[campoOtro] ? null : msg),
   email: (v) => (v.includes('@') && v.includes('.') ? null : 'Correo inválido'),
   // Teléfono opcional: si va vacío pasa; si escriben algo, debe tener 8 dígitos
@@ -205,6 +203,12 @@ export const rule = {
     if (!v) return null;
     const soloNumeros = v.replace(/\D/g, '');
     return soloNumeros.length === 8 ? null : 'Ingresa un teléfono de 8 dígitos';
+  },
+  // URL de imagen opcional: si va vacía pasa; si escriben algo, solo pide que empiece por http:// o https://
+  imageUrl: (v) => {
+    if (!v) return null;
+    const esEnlace = v.startsWith('http://') || v.startsWith('https://');
+    return esEnlace ? null : 'La URL debe empezar con http:// o https://';
   },
   // Tarjeta: acepta entre 13 y 16 números (con espacios llega hasta 19 caracteres)
   cardNumber: (v) => {
