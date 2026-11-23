@@ -196,6 +196,8 @@ export const rule = {
   required: (v) => (v ? null : 'Este campo es obligatorio'),
   min: (n) => (v) => (v.length >= n ? null : `Escribe al menos ${n} caracteres`),
   max: (n) => (v) => (v.length <= n ? null : `Máximo ${n} caracteres`),
+  // Permite que otras páginas (como Administración al guardar URLs) revisen patrones de texto
+  match: (patron, msg) => (v) => (!v || patron.test(v) ? null : msg),
   same: (campoOtro, msg) => (v, datos) => (v === datos[campoOtro] ? null : msg),
   email: (v) => (v.includes('@') && v.includes('.') ? null : 'Correo inválido'),
   // Teléfono opcional: si va vacío pasa; si escriben algo, debe tener 8 dígitos
