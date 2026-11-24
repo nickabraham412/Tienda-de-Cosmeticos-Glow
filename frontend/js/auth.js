@@ -67,7 +67,7 @@ if (formRegistro) {
       nombre: [rule.required, rule.min(2), rule.max(60)],
       apellido: [rule.required, rule.min(2), rule.max(60)],
       email: [rule.required, rule.email, rule.max(120)],
-      telefono: [rule.max(20)],
+      telefono: [rule.required, rule.telefono,rule.max(20)],
       password: [rule.required, rule.min(8), rule.max(72)],
       password2: [rule.same('password', 'Las contraseñas no coinciden')]
     });
