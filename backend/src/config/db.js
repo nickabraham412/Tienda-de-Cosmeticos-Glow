@@ -34,7 +34,6 @@ function getPool() {
 /**
  * Ejecuta SIEMPRE consultas parametrizadas.
  * params: { nombre: [tipoSql, valor] }  →  se envían como parámetros tipados (@nombre),
- * nunca concatenados en el texto SQL. Eso es lo que previene la inyección SQL.
  */
 async function query(text, params = {}) {
   const pool = await getPool();

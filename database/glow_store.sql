@@ -1,4 +1,4 @@
--- borro en orden inverso para no chocar con las claves foraneas
+--borro en orden inverso para no chocar
 DROP TABLE IF EXISTS dbo.Pagos;
 DROP TABLE IF EXISTS dbo.DetallePedido;
 DROP TABLE IF EXISTS dbo.Pedidos;
@@ -26,7 +26,7 @@ CREATE TABLE dbo.Categorias (
     Descripcion NVARCHAR(300) NULL
 );
 
--- limite los tipos de piel para que coincidan con los filtros de la tienda
+--limite los tipos de piel para que coincidan con los filtros de la tienda
 CREATE TABLE dbo.Productos (
     Id INT IDENTITY(1,1) CONSTRAINT PK_Productos PRIMARY KEY,
     CategoriaId INT NOT NULL CONSTRAINT FK_Productos_Categoria REFERENCES dbo.Categorias(Id),

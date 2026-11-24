@@ -77,6 +77,7 @@ if (formRegistro) {
       ],
       password2: [rule.same('password', 'Las contraseñas no coinciden')]
     });
+    
     if (!datos) return;
 
     // armo el paquete de datos para mandarlo al servidor (sin password2)
