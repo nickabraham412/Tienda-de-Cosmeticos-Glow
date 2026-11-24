@@ -7,21 +7,20 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <!-- menu de arriba que se llena con js -->
   <header id="site-header" class="site-header"></header>
 
   <main class="container narrow">
     <h1>Crear cuenta</h1>
     
-    <!-- formulario de registro, novalidate es para validarlo nosotros en js -->
+    <!-- novalidate evita las burbujas feas del navegador para usar nuestros propios mensajes -->
     <form id="register-form" class="form" novalidate>
       <div class="two">
         <label>Nombre
-          <input name="nombre" maxlength="15" autocomplete="given-name">
+          <input name="nombre" maxlength="60" autocomplete="given-name">
           <small class="err" data-err-for="nombre"></small>
         </label>
         <label>Apellido
-          <input name="apellido" maxlength="15" autocomplete="family-name">
+          <input name="apellido" maxlength="60" autocomplete="family-name">
           <small class="err" data-err-for="apellido"></small>
         </label>
       </div>
@@ -32,7 +31,7 @@
       </label>
 
       <label>Teléfono (opcional)
-        <input name="telefono" type="tel" maxlength="9" autocomplete="tel">
+        <input name="telefono" type="tel" maxlength="20" placeholder="Ej. 8888-8888" autocomplete="tel">
         <small class="err" data-err-for="telefono"></small>
       </label>
 

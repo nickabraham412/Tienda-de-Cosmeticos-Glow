@@ -2,36 +2,33 @@ import { api, renderLayout, toast, errMsg, validateForm, rule, currentUser } fro
 
 await renderLayout();
 
-// si ya inicio sesion lo saco de aqui para que no vuelva a registrarse o loguearse
+// si ya hay sesion activa, lo mando directo al inicio o al panel
 async function revisarSesion() {
-  const usuarioActual = await currentUser();
-  if (usuarioActual) {
-    window.location.replace(elegirPaginaDestino(usuarioActual));
+  const usuario = await currentUser();
+  if (usuario) {
+    window.location.replace(elegirPaginaDestino(usuario));
   }
 }
 
-// decide a donde mandarlo despues de entrar (si es admin o cliente normal)
+// decide a que pagina redirigir segun el rol
 function elegirPaginaDestino(user) {
-  const parametros = new URLSearchParams(window.location.search);
-  const siguiente = parametros.get('next');
+  const params = new URLSearchParams(window.location.search);
+  const siguiente = params.get('next');
 
-  // reviso que el link sea interno de mi pagina y no un link raro externo
+  // verifico que la ruta sea interna de mi tienda
   if (siguiente && siguiente.startsWith('/') && !siguiente.startsWith('//')) {
     if (user.rol === 'admin' || !siguiente.startsWith('/admin')) {
       return siguiente;
     }
   }
 
-  if (user.rol === 'admin') {
-    return '/admin/';
-  }
-  return '/index.html';
+  return user.rol === 'admin' ? '/admin/' : '/index.html';
 }
 
-// logica para el formulario de iniciar sesion (login.html)
+// --- INICIAR SESION ---
 const formLogin = document.getElementById('login-form');
 if (formLogin) {
-  formLogin.addEventListener('submit', async function(e) {
+  formLogin.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const datos = validateForm(formLogin, {
@@ -39,6 +36,9 @@ if (formLogin) {
       password: [rule.required]
     });
     if (!datos) return;
+
+    const btn = formLogin.querySelector('button[type="submit"]');
+    btn.disabled = true;
 
     try {
       const user = await api('/auth/login', {
@@ -51,52 +51,55 @@ if (formLogin) {
       window.location.href = elegirPaginaDestino(user);
     } catch (error) {
       toast(errMsg(error), 'err');
+      btn.disabled = false;
     }
   });
 }
 
-// logica para el formulario de crear cuenta (registro.html)
+// --- CREAR CUENTA ---
 const formRegistro = document.getElementById('register-form');
 if (formRegistro) {
-  formRegistro.addEventListener('submit', async function(e) {
+  formRegistro.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // reglas para revisar que los datos y la contraseña esten bien
     const datos = validateForm(formRegistro, {
       nombre: [rule.required, rule.min(2), rule.max(60)],
       apellido: [rule.required, rule.min(2), rule.max(60)],
       email: [rule.required, rule.email, rule.max(120)],
-      telefono: [rule.max(20)],
+      // opcional: si escribe algo, que tenga entre 8 y 20 digitos/guiones
+      telefono: [rule.match(/^$|^[0-9+\-\s]{8,20}$/, 'Usa entre 8 y 20 números')],
       password: [
         rule.required,
         rule.min(8),
         rule.max(72),
-        rule.match(/[a-z]/, 'Incluye una minúscula'),
-        rule.match(/[A-Z]/, 'Incluye una mayúscula'),
-        rule.match(/\d/, 'Incluye un número')
+        rule.match(/[a-z]/, 'Falta una minúscula'),
+        rule.match(/[A-Z]/, 'Falta una mayúscula'),
+        rule.match(/\d/, 'Falta un número')
       ],
       password2: [rule.same('password', 'Las contraseñas no coinciden')]
     });
-    
+
     if (!datos) return;
 
-    // armo el paquete de datos para mandarlo al servidor (sin password2)
-    const nuevoUsuario = {
-      nombre: datos.nombre,
-      apellido: datos.apellido,
-      email: datos.email,
-      telefono: datos.telefono,
-      password: formRegistro.elements.password.value
-    };
+    const btn = formRegistro.querySelector('button[type="submit"]');
+    btn.disabled = true;
 
     try {
       const user = await api('/auth/register', {
         method: 'POST',
-        body: nuevoUsuario
+        body: {
+          nombre: datos.nombre,
+          apellido: datos.apellido,
+          email: datos.email,
+          telefono: datos.telefono,
+          password: formRegistro.elements.password.value
+        }
       });
+      toast('¡Cuenta creada con éxito!', 'ok');
       window.location.href = elegirPaginaDestino(user);
     } catch (error) {
       toast(errMsg(error), 'err');
+      btn.disabled = false;
     }
   });
 }
