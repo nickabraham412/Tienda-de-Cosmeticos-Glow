@@ -62,24 +62,32 @@ if (formRegistro) {
   formRegistro.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // validacion basica usando solo las reglas seguras de common.js
     const datos = validateForm(formRegistro, {
       nombre: [rule.required, rule.min(2), rule.max(60)],
       apellido: [rule.required, rule.min(2), rule.max(60)],
       email: [rule.required, rule.email, rule.max(120)],
-      // opcional: si escribe algo, que tenga entre 8 y 20 digitos/guiones
-      telefono: [rule.match(/^$|^[0-9+\-\s]{8,20}$/, 'Usa entre 8 y 20 números')],
-      password: [
-        rule.required,
-        rule.min(8),
-        rule.max(72),
-        rule.match(/[a-z]/, 'Falta una minúscula'),
-        rule.match(/[A-Z]/, 'Falta una mayúscula'),
-        rule.match(/\d/, 'Falta un número')
-      ],
+      telefono: [rule.max(20)],
+      password: [rule.required, rule.min(8), rule.max(72)],
       password2: [rule.same('password', 'Las contraseñas no coinciden')]
     });
 
     if (!datos) return;
+
+    const pass = formRegistro.elements.password.value;
+    const tel = datos.telefono.trim();
+
+    // valido el telefono solo si el usuario escribio algo
+    if (tel !== '' && !/^[0-9+\-\s]{8,20}$/.test(tel)) {
+      toast('El teléfono debe tener entre 8 y 20 números', 'err');
+      return;
+    }
+
+    // valido que la contraseña tenga minuscula, mayuscula y numero
+    if (!/[a-z]/.test(pass) || !/[A-Z]/.test(pass) || !/\d/.test(pass)) {
+      toast('La contraseña debe tener mayúscula, minúscula y número', 'err');
+      return;
+    }
 
     const btn = formRegistro.querySelector('button[type="submit"]');
     btn.disabled = true;
@@ -91,8 +99,8 @@ if (formRegistro) {
           nombre: datos.nombre,
           apellido: datos.apellido,
           email: datos.email,
-          telefono: datos.telefono,
-          password: formRegistro.elements.password.value
+          telefono: tel,
+          password: pass
         }
       });
       toast('¡Cuenta creada con éxito!', 'ok');
